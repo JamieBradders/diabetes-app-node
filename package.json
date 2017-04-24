@@ -1,0 +1,14 @@
+{
+  "name": "igluco",
+  "version": "1.0.0",
+  "description": "Real-time Graph for Diabetes Awareness Week",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jamie Bradley | Endeavour Digital <jamie@endeavour-digital.com>",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^16.1.1"
+  }
+}
