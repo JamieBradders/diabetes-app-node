@@ -514,7 +514,7 @@ bluebird@^3.0.5:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
-boom@4.x.x:
+boom@4.x.x, boom@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-4.3.1.tgz#4f8a3005cb4a7e3889f749030fd25b96e01d2e31"
   dependencies:
@@ -685,6 +685,12 @@ globals@^9.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
+hapi-error@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/hapi-error/-/hapi-error-1.7.0.tgz#9015e8d49980bdb9550cfdce815cc010030e12dc"
+  dependencies:
+    hoek "^4.1.0"
+
 hapi-react@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/hapi-react/-/hapi-react-5.0.1.tgz#6ab6a0c9fbc76ad4c962bcd9031cd5cc5b579d35"
@@ -737,7 +743,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoek@4.x.x:
+hoek@4.x.x, hoek@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.1.1.tgz#9cc573ffba2b7b408fb5e9c2a13796be94cddce9"
 

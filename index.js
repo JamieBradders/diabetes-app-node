@@ -30,7 +30,11 @@ server.connection({
 
 // Server views config
 const options = { beautify: true }
-server.register(require('vision'), (err) => {
+server.register([require('hapi-error'), require('vision')], (err) => {
+  if (err) {
+    throw err
+  }
+
   server.views({
     engines: {
       jsx: require('hapi-react')(options)
@@ -50,7 +54,7 @@ for (var route in routes) {
 // See if you get the updates...
 const bloodRef = firebase.database().ref(`bloods/`)
 bloodRef.on('value', (snapshot) => {
-  console.log('Snapshot of database', snapshot.val())
+  // console.log('Snapshot of database', snapshot.val())
 })
 
 // Startup the server

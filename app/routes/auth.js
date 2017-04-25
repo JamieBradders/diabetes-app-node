@@ -1,25 +1,35 @@
 /**
  * Authentication Routes
  */
+
+const firebase = require('firebase')
 const Joi = require('joi')
+
+const AuthController = require('../controllers/authController')
+const controller = new AuthController()
+// const Boom = require('boom')
 
 module.exports = [
   {
     method: 'POST',
-    path: '/auth/verify',
+    path: '/login',
     handler(request, reply) {
-      console.log('Welcome to the auth layer, here is the payload', request.payload)
-      reply({
-        'message': 'stuff to follow'
-      })
+      controller.loginUser(request, reply)
     },
     config: {
       validate: {
         payload: {
-          email: Joi.string().email(),
-          password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required()
+          email: Joi.string().email().required(),
+          password: Joi.string().required()
         }
       }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/sign-out',
+    handler(request, reply) {
+      controller.signOutUser(request, reply)
     }
   }
 ]
