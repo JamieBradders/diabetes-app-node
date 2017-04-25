@@ -13,7 +13,7 @@ class FirebaseHelpers {
   postData(table, payload) {
     const tableRef = firebase.database().ref(`${table}/`)
 
-    // Assign id and timestamp to the payload
+    // Assign timestamp to the payload
     payload.timestamp = Number(new Date())
 
     tableRef.push(payload)
