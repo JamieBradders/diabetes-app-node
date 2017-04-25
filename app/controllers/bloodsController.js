@@ -2,31 +2,41 @@
  * Bloods Controller
  */
 const firebase = require('firebase')
+const FirebaseHelpers = require('../helpers/firebase')
+const helpers = new FirebaseHelpers()
 
 class BloodsController {
   getBloods(request, reply) {
-    const data = firebase.database().ref('/bloods').once('value').then((snapshot) => {
-      reply(snapshot.val())
-    })
+    helpers.getData('bloods')
+      .then((snapshot) => {
+        reply(snapshot.val())
+      })
   }
 
   postBlood(request, reply) {
-    this._postData('/bloods', request.payload)
+    helpers.postData('bloods', request.payload)
+
     reply({
       'message': 'Blood Sugar Posted Successfully'
     })
   }
 
-  // @TODO Maybe move to a firebase service
-  _postData(table, payload) {
-    const myRef = firebase.database().ref(table).push()
-    const key   = myRef.key
+  updateBlood(request, reply) {
+    const id = request.params.id
+    helpers.updateData('bloods', id, request.payload)
 
-    // Assign id and timestamp to the payload
-    payload.id = key
-    payload.timestamp = Number(new Date())
+    reply({
+      'message': 'Blood Sugar Updated Successfully'
+    })
+  }
 
-    myRef.push(payload)
+  deleteBlood(request, reply) {
+    const id = request.params.id
+    helpers.deleteData('bloods', id)
+
+    reply({
+      'message': 'Blood Sugar Deleted Successfully'
+    })
   }
 }
 

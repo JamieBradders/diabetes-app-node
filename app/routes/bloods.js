@@ -32,5 +32,29 @@ module.exports = [
         }
       }
     }
+  },
+  {
+    method: 'PUT',
+    path: '/blood/{id}',
+    handler: (request, reply) => {
+      controller.updateBlood(request, reply)
+    },
+    config: {
+      validate: {
+        payload: {
+          blood: Joi.number().min(0).max(40).required(),
+          carbs: Joi.number(),
+          insulin: Joi.number(),
+          notes: Joi.string().min(1)
+        }
+      }
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/blood/{id}',
+    handler: (request, reply) => {
+      controller.deleteBlood(request, reply)
+    }
   }
 ]
