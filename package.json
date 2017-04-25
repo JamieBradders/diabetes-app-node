@@ -11,7 +11,11 @@
   "dependencies": {
     "firebase": "^3.8.0",
     "hapi": "^16.1.1",
+    "hapi-react": "^5.0.1",
     "joi": "^10.4.1",
-    "underscore": "^1.8.3"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "underscore": "^1.8.3",
+    "vision": "^4.1.1"
   }
 }

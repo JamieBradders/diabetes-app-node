@@ -22,8 +22,23 @@ const database = firebase.database()
 
 server.connection({
   host: process.env.HOST || 'localhost',
-  port: process.env.PORT || 8080
+  port: process.env.PORT || 8080,
+  routes: {
+    cors: true
+  }
 })
+
+// Server views config
+const options = { beautify: true }
+server.register(require('vision'), (err) => {
+  server.views({
+    engines: {
+      jsx: require('hapi-react')(options)
+    },
+    relativeTo: __dirname + '/app/views/'
+  })
+})
+
 
 // Add all the routes within the routes folder
 for (var route in routes) {
