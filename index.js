@@ -2,10 +2,14 @@
 // Simple Hapi Server which communicates with the Firebase Store.
 
 const Hapi     = require('hapi')
+const Nunjucks = require('nunjucks-hapi')
+const Path     = require('path')
+const Vision   = require('vision')
 const firebase = require('firebase')
+const routes   = require('./app/routes')
+
 const server   = new Hapi.Server()
 
-const routes = require('./app/routes')
 
 // Configure Firebase => @NOTE to be moved
 // Initialize Firebase
@@ -15,6 +19,7 @@ const firebaseConfig = {
   databaseURL: "https://igluco-57677.firebaseio.com",
   storageBucket: "igluco-57677.appspot.com",
 }
+
 firebase.initializeApp(firebaseConfig);
 
 // Now we need to get a reference to the database service
@@ -30,16 +35,13 @@ server.connection({
 
 // Server views config
 const options = { beautify: true }
-server.register([require('hapi-error'), require('vision')], (err) => {
-  if (err) {
-    throw err
-  }
 
+server.register([Vision], (err) => {
   server.views({
     engines: {
-      jsx: require('hapi-react')(options)
+       njk: Nunjucks
     },
-    relativeTo: __dirname + '/app/views/'
+    relativeTo: Path.join(__dirname, '/app/views')
   })
 })
 
