@@ -9,7 +9,7 @@ class StaticController {
       if (user) {
         reply.redirect('admin-dashboard')
       } else {
-        reply.view('index')
+        reply.view('pages/index')
       }
     })
   }
@@ -23,7 +23,7 @@ class StaticController {
       } else {
         reply.redirect('/')
       }
-    }
+    })
   }
 }
 
