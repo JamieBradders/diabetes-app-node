@@ -22,8 +22,27 @@ const database = firebase.database()
 
 server.connection({
   host: process.env.HOST || 'localhost',
-  port: process.env.PORT || 8080
+  port: process.env.PORT || 8080,
+  routes: {
+    cors: true
+  }
 })
+
+// Server views config
+const options = { beautify: true }
+server.register([require('hapi-error'), require('vision')], (err) => {
+  if (err) {
+    throw err
+  }
+
+  server.views({
+    engines: {
+      jsx: require('hapi-react')(options)
+    },
+    relativeTo: __dirname + '/app/views/'
+  })
+})
+
 
 // Add all the routes within the routes folder
 for (var route in routes) {
@@ -35,7 +54,7 @@ for (var route in routes) {
 // See if you get the updates...
 const bloodRef = firebase.database().ref(`bloods/`)
 bloodRef.on('value', (snapshot) => {
-  console.log('Snapshot of database', snapshot.val())
+  // console.log('Snapshot of database', snapshot.val())
 })
 
 // Startup the server

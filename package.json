@@ -4,14 +4,21 @@
   "description": "Real-time Graph for Diabetes Awareness Week",
   "main": "index.js",
   "scripts": {
+    "local": "nodemon index.js -e js,jsx,njk",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jamie Bradley | Endeavour Digital <jamie@endeavour-digital.com>",
   "license": "ISC",
   "dependencies": {
+    "boom": "^4.3.1",
     "firebase": "^3.8.0",
     "hapi": "^16.1.1",
+    "hapi-error": "^1.7.0",
+    "hapi-react": "^5.0.1",
     "joi": "^10.4.1",
-    "underscore": "^1.8.3"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "underscore": "^1.8.3",
+    "vision": "^4.1.1"
   }
 }
