@@ -1,12 +1,11 @@
 /**
  * Authentication Routes
  */
-
 const firebase = require('firebase')
 const Joi = require('joi')
-
 const AuthController = require('../controllers/authController')
 const controller = new AuthController()
+
 // const Boom = require('boom')
 
 module.exports = [

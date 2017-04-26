@@ -15,7 +15,6 @@ class FirebaseHelpers {
 
     // Assign timestamp to the payload
     payload.timestamp = Number(new Date())
-
     tableRef.push(payload)
   }
 

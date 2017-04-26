@@ -4,7 +4,6 @@
  * these routes
  */
 const Joi              = require('joi')
-
 const BloodsController = require('../controllers/bloodsController')
 const controller       = new BloodsController()
 
