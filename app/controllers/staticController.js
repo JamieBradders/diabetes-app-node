@@ -5,23 +5,25 @@ const firebase = require('firebase')
 
 class StaticController {
   renderLogin(request, reply) {
-    const user = firebase.auth().currentUser
-    if (user) {
-      reply.redirect('admin-dashboard')
-    } else {
-      reply.view('index')
-    }
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        reply.redirect('admin-dashboard')
+      } else {
+        reply.view('pages/index')
+      }
+    })
   }
 
   renderDashboard(request, reply) {
-    const user = firebase.auth().currentUser
-    if (user) {
-      reply.view('dashboard/index', {
-        user: user
-      })
-    } else {
-      reply.redirect('/')
-    }
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        reply.view('dashboard/index', {
+          user: user
+        })
+      } else {
+        reply.redirect('/')
+      }
+    })
   }
 }
 

@@ -1,0 +1,17 @@
+{% extends "app/views/layouts/master.njk" %}
+
+{% block content %}
+  <h1>Login</h1>
+
+  {% if error_message %}
+    <div class="IG-Error">
+      {{ error_message }}
+    </div>
+  {% endif %}
+
+  <form class="IG_Form IG_Form--Login" action="/login" method="POST">
+    <input type="email" name="email" placeholder="Your Email Address" autoComplete="off" />
+    <input type="password" name="password" placeholder="Your Password" />
+    <button>Login</button>
+  </form>
+{% endblock %}
