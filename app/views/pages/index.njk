@@ -1,15 +1,11 @@
 {% extends "app/views/layouts/master.njk" %}
 
 {% block content %}
-  <h1>Login</h1>
+  {#<div id="IG_App"></div>#}
 
-  {% if error_message %}
-    <div class="IG-Error">
-      {{ error_message }}
-    </div>
-  {% endif %}
+  <h1>Welcome to iGluco</h1>
 
-  <form class="IG_Form IG_Form--Login" action="/login" method="POST">
+  <form className="IG_Form IG_Form--Login" method="post" action="/login">
     <input type="email" name="email" placeholder="Your Email Address" autoComplete="off" />
     <input type="password" name="password" placeholder="Your Password" />
     <button>Login</button>

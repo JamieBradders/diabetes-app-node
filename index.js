@@ -2,14 +2,20 @@
 // Simple Hapi Server which communicates with the Firebase Store.
 
 const Hapi     = require('hapi')
+const Inert    = require('inert')
 const Nunjucks = require('nunjucks-hapi')
 const Path     = require('path')
 const Vision   = require('vision')
+const Yar      = require('yar')
+
 const firebase = require('firebase')
+const admin    = require("firebase-admin")
 const routes   = require('./app/routes')
 
 const server   = new Hapi.Server()
 
+// Get the firebase auth
+var serviceAccount = require("./serviceAccount.json");
 
 // Configure Firebase => @NOTE to be moved
 // Initialize Firebase
@@ -19,6 +25,11 @@ const firebaseConfig = {
   databaseURL: "https://igluco-57677.firebaseio.com",
   storageBucket: "igluco-57677.appspot.com",
 }
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://igluco-57677.firebaseio.com"
+})
 
 firebase.initializeApp(firebaseConfig);
 
@@ -34,9 +45,23 @@ server.connection({
 })
 
 // Server views config
-const options = { beautify: true }
+// const options = { beautify: true }
 
-server.register([Vision], (err) => {
+const cookies = {
+  storeBlank: false,
+  cookieOptions: {
+    password: 'the-password-must-be-at-least-32-characters-long',
+    isSecure: true
+  }
+};
+
+// Register cookie jar
+server.register({
+  register: Yar,
+  options: cookies
+})
+
+server.register([Vision, Inert], (err) => {
   server.views({
     engines: {
        njk: Nunjucks

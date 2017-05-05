@@ -16,9 +16,27 @@ module.exports = [
   },
   {
     method: 'GET',
+    path: '/test-call',
+    handler(request, reply) {
+      reply({
+        'message': 'Sup fool this has worked'
+      })
+    }
+  },
+  {
+    method: 'GET',
     path: '/admin-dashboard',
     handler(request, reply) {
       controller.renderDashboard(request, reply)
     }
   },
+  {
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+        directory: {
+            path: 'public'
+        }
+    }
+  }
 ]

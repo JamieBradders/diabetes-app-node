@@ -15,15 +15,17 @@ class StaticController {
   }
 
   renderDashboard(request, reply) {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        reply.view('dashboard/index', {
-          user: user
-        })
-      } else {
-        reply.redirect('/')
-      }
-    })
+
+    reply.view('dashboard/index')
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     reply.view('dashboard/index', {
+    //       user: user
+    //     })
+    //   } else {
+    //     reply.redirect('/')
+    //   }
+    // })
   }
 }
 

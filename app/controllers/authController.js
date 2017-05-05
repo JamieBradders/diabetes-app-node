@@ -1,3 +1,4 @@
+const Boom = require('boom')
 const firebase = require('firebase')
 
 class AuthController {
@@ -6,12 +7,29 @@ class AuthController {
     const user = firebase.auth().signInWithEmailAndPassword(email, password)
 
     user.then((user) => {
-      reply.redirect('/admin-dashboard')
-    }).catch((error) => {
-      reply.view('index', {
-        error_message: error.message
+      const payload = {
+        user: user
+      }
+
+      firebase.auth().currentUser.getToken(true).then((idToken) => {
+        payload.token = idToken
+      }).then(() => {
+        // Store in the cookie token to be retrieved at a later stage.
+        reply.redirect('admin-dashboard')
       })
+    }).catch((error) => {
+      reply(Boom.unauthorized('unauthorized user'))
     })
+  }
+
+  verifyUser(request, reply) {
+    const user  = firebase.auth().currentUser
+
+    if (user) {
+      reply(user)
+    } else {
+      reply(Boom.unauthorized('unauthorized user'))
+    }
   }
 
   signOutUser(request, reply) {
