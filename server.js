@@ -1,40 +1,40 @@
 // Sprint One
 // Simple Hapi Server which communicates with the Firebase Store.
 
-const Hapi     = require('hapi')
-const Inert    = require('inert')
+const Hapi = require('hapi')
+const Inert = require('inert')
 const Nunjucks = require('nunjucks-hapi')
-const Path     = require('path')
-const Vision   = require('vision')
-const Yar      = require('yar')
+const Path = require('path')
+const Vision = require('vision')
+const Yar = require('yar')
 
 const firebase = require('firebase')
-const admin    = require("firebase-admin")
-const routes   = require('./app/routes')
+const admin = require('firebase-admin')
+const routes = require('./app/routes')
 
-const server   = new Hapi.Server()
+const server = new Hapi.Server()
 
 // Get the firebase auth
-var serviceAccount = require("./serviceAccount.json");
+const serviceAccount = require('./serviceAccount.json')
 
 // Configure Firebase => @NOTE to be moved
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCLqLZIxY9275HCgUD4xJ1KGZUR3nSW1Z4",
-  authDomain: "igluco-57677.firebaseapp.com",
-  databaseURL: "https://igluco-57677.firebaseio.com",
-  storageBucket: "igluco-57677.appspot.com",
+  apiKey: 'AIzaSyCLqLZIxY9275HCgUD4xJ1KGZUR3nSW1Z4',
+  authDomain: 'igluco-57677.firebaseapp.com',
+  databaseURL: 'https://igluco-57677.firebaseio.com',
+  storageBucket: 'igluco-57677.appspot.com'
 }
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://igluco-57677.firebaseio.com"
+  databaseURL: 'https://igluco-57677.firebaseio.com'
 })
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
 // Now we need to get a reference to the database service
-const database = firebase.database()
+// const database = firebase.database()
 
 server.connection({
   host: process.env.HOST || 'localhost',
@@ -62,14 +62,16 @@ server.register({
 })
 
 server.register([Vision, Inert], (err) => {
+  if (err) {
+    throw err
+  }
   server.views({
     engines: {
-       njk: Nunjucks
+      njk: Nunjucks
     },
     relativeTo: Path.join(__dirname, '/app/views')
   })
 })
-
 
 // Add all the routes within the routes folder
 for (var route in routes) {
@@ -87,7 +89,7 @@ bloodRef.on('value', (snapshot) => {
 // Startup the server
 server.start((err) => {
   if (err) {
-    throw err;
+    throw err
   }
   console.log(`Server running at: ${server.info.uri}`)
 })

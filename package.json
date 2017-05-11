@@ -4,7 +4,7 @@
   "description": "Real-time Graph for Diabetes Awareness Week",
   "main": "index.js",
   "scripts": {
-    "local": "nodemon server.js -e js,njk",
+    "local": "./node_modules/.bin/nodemon server.js -e js,njk",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jamie Bradley | Endeavour Digital <jamie@endeavour-digital.com>",
@@ -33,5 +33,8 @@
     "underscore": "^1.8.3",
     "vision": "^4.1.1",
     "yar": "^8.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
