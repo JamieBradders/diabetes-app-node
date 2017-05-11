@@ -1,43 +1,40 @@
 /**
  * Bloods Controller
  */
-const firebase = require('firebase')
+const Boom = require('boom')
 const FirebaseHelpers = require('../helpers/firebase')
+const getUser = require('../helpers/getUser')
 const helpers = new FirebaseHelpers()
 
-const Boom = require('boom')
-
-const getUser = require('../helpers/getUser')
-
 class BloodsController {
-  getBloods(request, reply) {
+  getBloods (request, reply) {
     helpers.getData('bloods')
       .then((snapshot) => {
         reply(snapshot.val())
       })
   }
 
-  postBlood(request, reply) {
-    const token = request.headers['token']
-
+  postBlood (request, reply) {
+    const user = request.yar.get('user')
+    const token = user.token
     getUser(request, token)
       .then(() => {
         helpers.postData('bloods', request.payload)
           .then(() => {
+            console.log('posted')
             reply({
               'message': 'Blood Sugar Posted Successfully'
             })
           }).catch((error) => {
-          reply(Boom.unauthorized(error))
-        })
-
+            reply(Boom.unauthorized(error))
+          })
       })
-      .catch(function (error) {
+      .catch(function () {
         reply(Boom.unauthorized('unauthorized user'))
-      });
+      })
   }
 
-  updateBlood(request, reply) {
+  updateBlood (request, reply) {
     const id = request.params.id
     const token = request.headers['token']
 
@@ -49,16 +46,15 @@ class BloodsController {
               'message': 'Blood Sugar Updated Successfully'
             })
           }).catch((error) => {
-          reply(Boom.unauthorized(error))
-        })
-
+            reply(Boom.unauthorized(error))
+          })
       })
-      .catch(function (error) {
+      .catch(function () {
         reply(Boom.unauthorized('unauthorized user'))
       })
   }
 
-  deleteBlood(request, reply) {
+  deleteBlood (request, reply) {
     const id = request.params.id
     const token = request.headers['token']
 
@@ -70,11 +66,10 @@ class BloodsController {
               'message': 'Blood Sugar Deleted Successfully'
             })
           }).catch((error) => {
-          reply(Boom.unauthorized(error))
-        })
-
+            reply(Boom.unauthorized(error))
+          })
       })
-      .catch(function (error) {
+      .catch(function () {
         reply(Boom.unauthorized('unauthorized user'))
       })
   }

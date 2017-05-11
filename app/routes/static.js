@@ -8,7 +8,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/',
-    handler(request, reply) {
+    handler (request, reply) {
       const error = request.yar.get('error')
       const user = request.yar.get('user')
 
@@ -28,8 +28,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/dashboard',
-    handler(request, reply) {
-      const error = request.yar.get('error')
+    handler (request, reply) {
       const user = request.yar.get('user')
 
       if (user) {

@@ -3,7 +3,7 @@ const Yar = require('yar')
 const firebase = require('firebase')
 
 class AuthController {
-  loginUser(request, reply) {
+  loginUser (request, reply) {
     const { email, password } = request.payload
     const user = firebase.auth().signInWithEmailAndPassword(email, password)
 
@@ -20,7 +20,7 @@ class AuthController {
         // reply.view('dashboard/index')
         reply.redirect('/dashboard')
       })
-    }).catch((error) => {
+    }).catch(() => {
       // Set error message and return to homepage
       request.yar.set('error', {
         message: 'User not found or your credentials were invalid'
@@ -29,7 +29,7 @@ class AuthController {
     })
   }
 
-  signOutUser(request, reply) {
+  signOutUser (request, reply) {
     firebase.auth().signOut().then(() => {
       request.yar.clear('user')
       reply.redirect('/')
