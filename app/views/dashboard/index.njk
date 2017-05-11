@@ -3,6 +3,9 @@
 {% block content %}
 
   <h1>Welcome to the iGluco Dashboard</h1>
-  <a href="/sign-out">Log Out</a>
-  
+
+  <form method="post" action="/sign-out">
+    <button>Logout</button>
+  </form>
+
 {% endblock %}

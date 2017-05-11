@@ -1,6 +1,0 @@
-module.exports = { contents: "'use strict';\n\nvar _react = require('react');\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = require('react-dom');\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\nvar _IGluco = require('./IGluco');\n\nvar _IGluco2 = _interopRequireDefault(_IGluco);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nif (document.getElementById('IG_App')) {\n  _reactDom2.default.render(_react2.default.createElement(_IGluco2.default, null), document.getElementById('IG_App'));\n}\n\n// Import the App",
-dependencies: ["react","react-dom","./IGluco"],
-sourceMap: "{\"version\":3,\"sources\":[\"index.js\"],\"names\":[\"document\",\"getElementById\",\"render\"],\"mappings\":\";;AAAA;;;;AACA;;;;AAGA;;;;;;AAEA,IAAIA,SAASC,cAAT,CAAwB,QAAxB,CAAJ,EAAuC;AACrC,qBAASC,MAAT,CAAgB,qDAAhB,EAA4BF,SAASC,cAAT,CAAwB,QAAxB,CAA5B;AACD;;AALD\",\"file\":\"index.js\",\"sourcesContent\":[\"import React from 'react'\\nimport ReactDOM from 'react-dom'\\n\\n// Import the App\\nimport IGluco from './IGluco'\\n\\nif (document.getElementById('IG_App')) {\\n  ReactDOM.render(<IGluco />, document.getElementById('IG_App'));\\n}\\n\"]}",
-headerContent: undefined,
-mtime: 1493382012000
-};

@@ -2,41 +2,56 @@
  * Static Page Routes
  * Render a view based on a route
  */
-const firebase = require('firebase')
-const StaticController = require('../controllers/staticController')
-const controller = new StaticController()
+const getUser = require('../helpers/getUser')
 
 module.exports = [
   {
     method: 'GET',
     path: '/',
     handler(request, reply) {
-      controller.renderLogin(request, reply)
+      const error = request.yar.get('error')
+      const user = request.yar.get('user')
+
+      if (user) {
+        getUser(request, user.token)
+          .then(() => {
+            reply.redirect('/dashboard')
+          }).catch(() => {
+            reply.view('pages/index', error)
+          })
+      } else {
+        reply.view('pages/index', error)
+      }
     }
   },
+
   {
     method: 'GET',
-    path: '/test-call',
+    path: '/dashboard',
     handler(request, reply) {
-      reply({
-        'message': 'Sup fool this has worked'
-      })
+      const error = request.yar.get('error')
+      const user = request.yar.get('user')
+
+      if (user) {
+        getUser(request, user.token)
+          .then(() => {
+            reply.view('dashboard/index')
+          }).catch(() => {
+            reply.redirect('/')
+          })
+      } else {
+        reply.redirect('/')
+      }
     }
   },
-  {
-    method: 'GET',
-    path: '/admin-dashboard',
-    handler(request, reply) {
-      controller.renderDashboard(request, reply)
-    }
-  },
+
   {
     method: 'GET',
     path: '/{param*}',
     handler: {
-        directory: {
-            path: 'public'
-        }
+      directory: {
+        path: 'public'
+      }
     }
   }
 ]

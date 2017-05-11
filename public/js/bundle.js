@@ -133,15 +133,12 @@ var Login = function (_React$Component) {
       };
 
       request.post('/login', body).then(function (res) {
-        // this will be stored in local storage for verification.
         var token = res.data.token;
-
-        if (_this2.state.message) {
-          _this2.setState({
-            message: ''
-          });
-        }
         console.log('here is the token', token);
+
+        // @TODO Store in the local storage...
+
+        window.location.pathname = '/dashboard';
       })
       // .then(() => {
       //   const body = {

@@ -4,6 +4,7 @@
 const firebase = require('firebase')
 const admin = require('firebase-admin')
 const Joi = require('joi')
+const Boom = require('boom')
 const AuthController = require('../controllers/authController')
 const controller = new AuthController()
 
@@ -25,6 +26,7 @@ module.exports = [
       }
     }
   },
+
   {
     method: 'POST',
     path: '/get-user',
@@ -41,16 +43,13 @@ module.exports = [
           })
         })
         .catch(function (error) {
-          reply.redirect('/')
-          // reply({
-          //   message: 'unauthenticated',
-          //   success: false
-          // })
+          reply(Boom.unauthorized('unauthorized user'))
         });
     }
   },
+
   {
-    method: 'GET',
+    method: 'POST',
     path: '/sign-out',
     handler(request, reply) {
       controller.signOutUser(request, reply)

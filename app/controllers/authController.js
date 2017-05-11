@@ -1,4 +1,5 @@
 const Boom = require('boom')
+const Yar = require('yar')
 const firebase = require('firebase')
 
 class AuthController {
@@ -14,28 +15,24 @@ class AuthController {
       firebase.auth().currentUser.getToken(true).then((idToken) => {
         payload.token = idToken
       }).then(() => {
-        // Store in the cookie token to be retrieved at a later stage.
-        reply.redirect('admin-dashboard')
+        // Get the token and persist in session
+        request.yar.set('user', { token: payload.token })
+        // reply.view('dashboard/index')
+        reply.redirect('/dashboard')
       })
     }).catch((error) => {
-      reply(Boom.unauthorized('unauthorized user'))
+      // Set error message and return to homepage
+      request.yar.set('error', {
+        message: 'User not found or your credentials were invalid'
+      })
+      reply.redirect('/')
     })
-  }
-
-  verifyUser(request, reply) {
-    const user  = firebase.auth().currentUser
-
-    if (user) {
-      reply(user)
-    } else {
-      reply(Boom.unauthorized('unauthorized user'))
-    }
   }
 
   signOutUser(request, reply) {
     firebase.auth().signOut().then(() => {
-      // Sign Out Successful
-      reply.view('dashboard/logged-out')
+      request.yar.clear('user')
+      reply.redirect('/')
     }).catch((error) => {
       reply({ error: error })
     })

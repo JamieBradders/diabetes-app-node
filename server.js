@@ -51,9 +51,9 @@ const cookies = {
   storeBlank: false,
   cookieOptions: {
     password: 'the-password-must-be-at-least-32-characters-long',
-    isSecure: true
+    isSecure: false
   }
-};
+}
 
 // Register cookie jar
 server.register({

@@ -21,15 +21,12 @@ class Login extends React.Component {
     }
 
     request.post('/login', body).then((res) => {
-      // this will be stored in local storage for verification.
       const token = res.data.token
-
-      if (this.state.message) {
-        this.setState({
-          message: ''
-        })
-      }
       console.log('here is the token', token)
+
+      // @TODO Store in the local storage...
+
+      window.location.pathname = '/dashboard'
     })
     // .then(() => {
     //   const body = {

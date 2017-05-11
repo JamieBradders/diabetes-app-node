@@ -15,15 +15,15 @@ class FirebaseHelpers {
 
     // Assign timestamp to the payload
     payload.timestamp = Number(new Date())
-    tableRef.push(payload)
+    return tableRef.push(payload)
   }
 
   updateData(table, id, payload) {
-    firebase.database().ref(`${table}/${id}`).update(payload)
+    return firebase.database().ref(`${table}/${id}`).update(payload)
   }
 
   deleteData(table, id) {
-    firebase.database().ref(`${table}/${id}`).remove()
+    return firebase.database().ref(`${table}/${id}`).remove()
   }
 }
 
