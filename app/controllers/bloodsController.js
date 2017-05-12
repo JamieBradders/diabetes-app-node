@@ -1,42 +1,77 @@
 /**
  * Bloods Controller
  */
-const firebase = require('firebase')
+const Boom = require('boom')
 const FirebaseHelpers = require('../helpers/firebase')
+const getUser = require('../helpers/getUser')
 const helpers = new FirebaseHelpers()
 
 class BloodsController {
-  getBloods(request, reply) {
+  getBloods (request, reply) {
     helpers.getData('bloods')
       .then((snapshot) => {
         reply(snapshot.val())
       })
   }
 
-  postBlood(request, reply) {
-    helpers.postData('bloods', request.payload)
-
-    reply({
-      'message': 'Blood Sugar Posted Successfully'
-    })
+  postBlood (request, reply) {
+    const user = request.yar.get('user')
+    const token = user.token
+    getUser(request, token)
+      .then(() => {
+        helpers.postData('bloods', request.payload)
+          .then(() => {
+            console.log('posted')
+            reply({
+              'message': 'Blood Sugar Posted Successfully'
+            })
+          }).catch((error) => {
+            reply(Boom.unauthorized(error))
+          })
+      })
+      .catch(function () {
+        reply(Boom.unauthorized('unauthorized user'))
+      })
   }
 
-  updateBlood(request, reply) {
+  updateBlood (request, reply) {
     const id = request.params.id
-    helpers.updateData('bloods', id, request.payload)
+    const token = request.headers['token']
 
-    reply({
-      'message': 'Blood Sugar Updated Successfully'
-    })
+    getUser(request, token)
+      .then(() => {
+        helpers.updateData('bloods', id, request.payload)
+          .then(() => {
+            reply({
+              'message': 'Blood Sugar Updated Successfully'
+            })
+          }).catch((error) => {
+            reply(Boom.unauthorized(error))
+          })
+      })
+      .catch(function () {
+        reply(Boom.unauthorized('unauthorized user'))
+      })
   }
 
-  deleteBlood(request, reply) {
+  deleteBlood (request, reply) {
     const id = request.params.id
-    helpers.deleteData('bloods', id)
+    const token = request.headers['token']
 
-    reply({
-      'message': 'Blood Sugar Deleted Successfully'
-    })
+    getUser(request, token)
+      .then(() => {
+        helpers.deleteData('bloods', id)
+          .then(() => {
+            reply({
+              'message': 'Blood Sugar Deleted Successfully'
+            })
+          }).catch((error) => {
+            reply(Boom.unauthorized(error))
+          })
+      })
+      .catch(function () {
+        reply(Boom.unauthorized('unauthorized user'))
+      })
   }
 }
 

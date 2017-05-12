@@ -4,20 +4,37 @@
   "description": "Real-time Graph for Diabetes Awareness Week",
   "main": "index.js",
   "scripts": {
-    "local": "nodemon index.js -e js,njk",
+    "local": "./node_modules/.bin/nodemon server.js -e js,njk",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jamie Bradley | Endeavour Digital <jamie@endeavour-digital.com>",
   "license": "ISC",
   "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
     "boom": "^4.3.1",
     "firebase": "^3.8.0",
+    "firebase-admin": "^4.2.1",
+    "fuse-box": "^1.3.131",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
     "hapi": "^16.1.1",
+    "inert": "^4.2.0",
     "joi": "^10.4.1",
     "nunjucks-hapi": "^2.1.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "uglify-js": "^2.8.22",
     "underscore": "^1.8.3",
-    "vision": "^4.1.1"
+    "vision": "^4.1.1",
+    "yar": "^8.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

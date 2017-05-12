@@ -1,23 +1,37 @@
+const Boom = require('boom')
 const firebase = require('firebase')
 
 class AuthController {
-  loginUser(request, reply) {
+  loginUser (request, reply) {
     const { email, password } = request.payload
     const user = firebase.auth().signInWithEmailAndPassword(email, password)
 
     user.then((user) => {
-      reply.redirect('/admin-dashboard')
-    }).catch((error) => {
-      reply.view('index', {
-        error_message: error.message
+      const payload = {
+        user: user
+      }
+
+      firebase.auth().currentUser.getToken(true).then((idToken) => {
+        payload.token = idToken
+      }).then(() => {
+        // Get the token and persist in session
+        request.yar.set('user', { token: payload.token })
+        // reply.view('dashboard/index')
+        reply.redirect('/dashboard')
       })
+    }).catch(() => {
+      // Set error message and return to homepage
+      request.yar.set('error', {
+        message: 'User not found or your credentials were invalid'
+      })
+      reply.redirect('/')
     })
   }
 
-  signOutUser(request, reply) {
+  signOutUser (request, reply) {
     firebase.auth().signOut().then(() => {
-      // Sign Out Successful
-      reply.view('dashboard/logged-out')
+      request.yar.clear('user')
+      reply.redirect('/')
     }).catch((error) => {
       reply({ error: error })
     })

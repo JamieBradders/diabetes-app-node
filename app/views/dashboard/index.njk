@@ -3,6 +3,33 @@
 {% block content %}
 
   <h1>Welcome to the iGluco Dashboard</h1>
-  <a href="/sign-out">Log Out</a>
-  
+
+  <form method="post" action="/blood">
+    <fieldset>
+      <label for="blood">Blood sugar:</label>
+      <input type="text" name="blood" placeholder="Blood sugar" value="">
+    </fieldset>
+
+    <fieldset>
+      <label for="carbs">Carbs:</label>
+      <input type="text" name="carbs" placeholder="Carbohydrates" value="">
+    </fieldset>
+
+    <fieldset>
+      <label for="insulin">Insulin:</label>
+      <input type="text" name="insulin" placeholder="Insulin" value="">
+    </fieldset>
+
+    <fieldset>
+      <label for="notes">Notes:</label>
+      <textarea name="notes" placeholder="Any extra notes"></textarea>
+    </fieldset>
+
+    <button>Add Result</button>
+  </form>
+
+  <form method="post" action="/sign-out">
+    <button>Logout</button>
+  </form>
+
 {% endblock %}

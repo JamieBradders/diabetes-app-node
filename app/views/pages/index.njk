@@ -1,16 +1,16 @@
 {% extends "app/views/layouts/master.njk" %}
 
 {% block content %}
-  <h1>Login</h1>
+  {#<div id="IG_App"></div>#}
 
-  {% if error_message %}
-    <div class="IG-Error">
-      {{ error_message }}
-    </div>
-  {% endif %}
+  <h1>Login Page</h1>
 
-  <form class="IG_Form IG_Form--Login" action="/login" method="POST">
-    <input type="email" name="email" placeholder="Your Email Address" autoComplete="off" />
+  <div class="ig-error-unit">
+    <h4 class="ig-error-unit__message">{{ message }}</h4>
+  </div>
+
+  <form class="IG_Form IG_Form--Login" method="post" action="/login">
+    <input type="email" name="email" placeholder="Your Email Address" />
     <input type="password" name="password" placeholder="Your Password" />
     <button>Login</button>
   </form>
