@@ -2,16 +2,22 @@
 
 {% block content %}
   {#<div id="IG_App"></div>#}
+  <div class="ig-login-block">
+    <div class="ig-login-block__inner">
+      <h1 class="heading ig-login__title">Login to iGluco</h1>
 
-  <h1>Login Page</h1>
+      <div class="ig-error-unit">
+        <h4 class="ig-error-unit__message">{{ message }}</h4>
+      </div>
 
-  <div class="ig-error-unit">
-    <h4 class="ig-error-unit__message">{{ message }}</h4>
+      <form class="ig-form ig-form--login" method="post" action="/login">
+        <div class="ig-form-block">
+          <input class="ig-input ig-form-block__input" type="email" name="email" placeholder="Your Email Address" />
+          <input class="ig-input ig-form-block__input"type="password" name="password" placeholder="Your Password" />
+          <button class="ig-button primary">Login</button>
+        </div>
+      </form>
+    </div>
+    <div class="ig-logo"></div>
   </div>
-
-  <form class="IG_Form IG_Form--Login" method="post" action="/login">
-    <input type="email" name="email" placeholder="Your Email Address" />
-    <input type="password" name="password" placeholder="Your Password" />
-    <button>Login</button>
-  </form>
 {% endblock %}

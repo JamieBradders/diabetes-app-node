@@ -1,0 +1,16 @@
+// Login block
+.ig-login-block {
+  height: auto;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 450px;
+
+  &__inner {
+    background-color: $white;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    padding: 25px 50px 50px 50px;
+  }
+}

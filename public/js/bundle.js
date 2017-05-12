@@ -240,7 +240,7 @@ var Api = function () {
 module.exports = Api;
 });
 });
-FuseBox.pkg("react", {}, function(___scope___){
+FuseBox.pkg("react", {"object-assign":"4.1.1"}, function(___scope___){
 ___scope___.file("react.js", function(exports, require, module, __filename, __dirname){
 
 'use strict';
@@ -3397,7 +3397,7 @@ module.exports = getNextDebugID;
 });
 return ___scope___.entry = "react.js";
 });
-FuseBox.pkg("object-assign", {}, function(___scope___){
+FuseBox.pkg("object-assign@4.1.1", {}, function(___scope___){
 ___scope___.file("index.js", function(exports, require, module, __filename, __dirname){
 
 /*
@@ -5140,6 +5140,20 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       return emptyFunction.thatReturnsNull;
     }
 
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        warning(
+          false,
+          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+          'received %s at index %s.',
+          getPostfixForTypeWarning(checker),
+          i
+        );
+        return emptyFunction.thatReturnsNull;
+      }
+    }
+
     function validate(props, propName, componentName, location, propFullName) {
       for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
         var checker = arrayOfTypeCheckers[i];
@@ -5272,6 +5286,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   // This handles more types than `getPropType`. Only used for error messages.
   // See `createPrimitiveTypeChecker`.
   function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
     var propType = getPropType(propValue);
     if (propType === 'object') {
       if (propValue instanceof Date) {
@@ -5281,6 +5298,23 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       }
     }
     return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
   }
 
   // Returns class name of the object, if any.
@@ -5383,7 +5417,7 @@ module.exports = checkPropTypes;
 });
 return ___scope___.entry = "index.js";
 });
-FuseBox.pkg("react-dom", {}, function(___scope___){
+FuseBox.pkg("react-dom", {"object-assign":"4.1.1"}, function(___scope___){
 ___scope___.file("index.js", function(exports, require, module, __filename, __dirname){
 
 'use strict';
