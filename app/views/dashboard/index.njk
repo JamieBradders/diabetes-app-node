@@ -1,35 +1,49 @@
-{% extends "app/views/layouts/master.njk" %}
+{% extends "app/views/layouts/dashboard.njk" %}
 
 {% block content %}
 
-  <h1>Welcome to the iGluco Dashboard</h1>
+  {# Place the header into a partial #}
+  <header class="ig-header">
+    <div class="ig-container ig-container--fluid">
+      <div class="ig-grid ig-grid-no-spacing">
+        <div class="ig-grid-cell-column-2">
+          <h3 class="ig-heading">iGluco</h3>
+        </div>
+        <div class="ig-grid-cell-column-10 text-right">
+          <form method="post" action="/sign-out">
+            <div class="ig-user">
+              <h4 class="ig-heading ig-heading--normal ig-user__name">Hey, Jamie</h4>
+              <button class="ig-button primary ig-button--inline">Logout</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <form method="post" action="/blood">
-    <fieldset>
-      <label for="blood">Blood sugar:</label>
-      <input type="text" name="blood" placeholder="Blood sugar" value="">
-    </fieldset>
-
-    <fieldset>
-      <label for="carbs">Carbs:</label>
-      <input type="text" name="carbs" placeholder="Carbohydrates" value="">
-    </fieldset>
-
-    <fieldset>
-      <label for="insulin">Insulin:</label>
-      <input type="text" name="insulin" placeholder="Insulin" value="">
-    </fieldset>
-
-    <fieldset>
-      <label for="notes">Notes:</label>
-      <textarea name="notes" placeholder="Any extra notes"></textarea>
-    </fieldset>
-
-    <button>Add Result</button>
-  </form>
-
-  <form method="post" action="/sign-out">
-    <button>Logout</button>
-  </form>
-
+  <section class="ig-blood-block">
+    <div class="ig-container ig-container--fluid">
+      <div class="ig-grid ig-grid-no-spacing">
+        <div class="ig-grid-cell-column-4">
+          <h1 class="ig-heading">Add Test Result</h1>
+          <form class="ig-form" method="post" action="/blood">
+            <div class="ig-form-block">
+              <input class="ig-input" type="text" name="blood" placeholder="Blood sugar" value="">
+            </div>
+            <div class="ig-form-block">
+              <input class="ig-input" type="text" name="carbs" placeholder="Carbs" value="">
+            </div>
+            <div class="ig-form-block">
+              <input class="ig-input" type="text" name="insulin" placeholder="Insulin" value="">
+            </div>
+            <div class="ig-form-block">
+              <textarea class="ig-input ig-textarea" name="notes" placeholder="Any extra notes"></textarea>
+            </div>
+            <div class="ig-form-block">
+              <button class="ig-button ig-form-block__button primary">Add Result</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

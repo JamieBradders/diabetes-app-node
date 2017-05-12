@@ -22,4 +22,8 @@
       background-color: darken($colour--primary, 5%);
     }
   }
+
+  &--inline {
+    display: inline-block;
+  }
 }

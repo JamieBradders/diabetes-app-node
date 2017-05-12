@@ -1,0 +1,7 @@
+.ig-form-block {
+  // We have to apply a margin to the button when in a form-block.
+  // We are assuming that the button is at the bottom of the form.
+  &__button {
+    margin-top: 10px;
+  }
+}
