@@ -1,5 +1,4 @@
 const Boom = require('boom')
-const Yar = require('yar')
 const firebase = require('firebase')
 
 class AuthController {

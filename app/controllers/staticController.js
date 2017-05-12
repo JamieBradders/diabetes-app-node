@@ -4,8 +4,8 @@
 const firebase = require('firebase')
 
 class StaticController {
-  renderLogin(request, reply) {
-    firebase.auth().onAuthStateChanged(function(user) {
+  renderLogin (request, reply) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         reply.redirect('admin-dashboard')
       } else {
@@ -14,10 +14,9 @@ class StaticController {
     })
   }
 
-  renderDashboard(request, reply) {
+  renderDashboard (request, reply) {
     // reply.view('dashboard/index')
-
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         reply.view('dashboard/index', {
           user: user
