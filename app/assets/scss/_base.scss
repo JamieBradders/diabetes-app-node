@@ -1,0 +1,12 @@
+body {
+  background-color: $colour--primary;
+  font-family: $font--primary;
+  font-size: 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Text Alignment
+.text-right {
+  text-align: right;
+}

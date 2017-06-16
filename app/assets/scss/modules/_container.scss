@@ -1,0 +1,21 @@
+.ig-container {
+  margin: 0 auto;
+  max-width: $container-width;
+  padding: 0 16px;
+
+  &--fluid {
+    width: 100%;
+
+    @include media('lap-and-up') {
+      max-width: $container-fluid-width;
+    }
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--clearfix {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,60 @@
+{% extends "app/views/layouts/dashboard.njk" %}
+
+{% block content %}
+
+  {# Place the header into a partial #}
+  <header class="ig-header">
+    <div class="ig-container ig-container--fluid">
+      <div class="ig-grid ig-grid-no-spacing">
+        <div class="ig-grid-cell-column-2">
+          <h3 class="ig-heading">iGluco</h3>
+        </div>
+        <div class="ig-grid-cell-column-10 text-right">
+          <form method="post" action="/sign-out">
+            <div class="ig-user">
+              <h4 class="ig-heading ig-heading--normal ig-user__name">Hey, Jamie</h4>
+              <button class="ig-button primary ig-button--inline">Logout</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="ig-container ig-container--fluid">
+    <div class="ig-grid">
+      <div class="ig-error-unit">
+        <h4 class="ig-error-unit__message">{{ message }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <section class="ig-blood-block">
+    <div class="ig-container ig-container--fluid">
+      <div class="ig-grid ig-grid-no-spacing">
+        <div class="ig-grid-cell-column-4">
+          <h1 class="ig-heading">Add Test Result</h1>
+
+          <form class="ig-form" method="post" action="/blood">
+            <div class="ig-form-block">
+              <input class="ig-input" type="text" name="blood" placeholder="Blood sugar" value="">
+            </div>
+            <div class="ig-form-block">
+              <input class="ig-input" type="text" name="carbs" placeholder="Carbs" value="">
+            </div>
+            <div class="ig-form-block">
+              <input class="ig-input" type="text" name="insulin" placeholder="Insulin" value="">
+            </div>
+            <div class="ig-form-block">
+              <textarea class="ig-input ig-textarea" name="notes" placeholder="Any extra notes"></textarea>
+            </div>
+            <div class="ig-form-block">
+              <button class="ig-button ig-form-block__button primary">Add Result</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

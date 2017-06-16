@@ -1,0 +1,229 @@
+// Desktop Config
+$grid-desktop-columns            : 12 !default;
+$grid-desktop-gutter             : 16px !default;
+$grid-desktop-margin             : 16px !default;
+$grid-desktop-breakpoint         : 1025px !default;
+$grid-desktop-large-breakpoint   : 1200px !default;
+
+// Tablet Config
+$grid-tablet-columns             : 12 !default;
+$grid-tablet-gutter              : $grid-desktop-gutter !default;
+$grid-tablet-margin              : $grid-desktop-margin !default;
+$grid-tablet-breakpoint          : 840px !default;
+
+// Phone Config
+$grid-phone-columns              : 4 !default;
+$grid-phone-gutter               : $grid-desktop-gutter !default;
+$grid-phone-margin               : $grid-desktop-margin !default;
+
+// Cell & Column Config
+$grid-cell-default-columns       : $grid-phone-columns !default;
+$grid-max-columns                : $grid-desktop-columns !default;
+
+// Mixins for width calculation.
+@mixin _partial-size($size, $columns, $gutter) {
+  width: calc(#{(($size / $columns) * 100)+"%"} - #{$gutter});
+
+  .ig-grid-no-spacing > & {
+    width: #{(($size / $columns) * 100)+"%"};
+  }
+}
+
+@mixin _full-size($gutter) {
+  @include _partial-size(1, 1, $gutter);
+}
+
+@mixin _offset-size($size, $columns, $gutter) {
+  margin-left: calc(#{(($size / $columns) * 100)+"%"} + #{$gutter / 2});
+
+  .ig-grid-no-spacing > & {
+    margin-left: #{(($size / $columns) * 100)+"%"};
+  }
+}
+
+.ig-grid {
+  align-items: stretch;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 auto 0 auto;
+
+  // Phone
+  @media (max-width: $grid-tablet-breakpoint - 1) {
+    padding: $grid-phone-margin - ($grid-phone-gutter / 2);
+  }
+
+  // Tablet
+  @media (min-width: $grid-tablet-breakpoint) and (max-width: $grid-desktop-breakpoint - 1) {
+    padding: $grid-tablet-margin - ($grid-tablet-gutter / 2);
+  }
+
+  // Desktop
+  @media (min-width: $grid-desktop-breakpoint) {
+    padding: $grid-desktop-margin - ($grid-desktop-gutter / 2);
+  }
+
+  &-no-spacing {
+    padding: 0;
+
+    & > .ig-grid-cell {
+      margin: 0;
+    }
+  }
+}
+
+.ig-grid-cell {
+  // Phone
+  @media (max-width: $grid-tablet-breakpoint - 1) {
+    margin: $grid-phone-gutter / 2;
+    @include _partial-size($grid-cell-default-columns, $grid-phone-columns, $grid-phone-gutter);
+
+    &-hide-phone {
+      display: none !important;
+    }
+  }
+
+  // Tablet
+  @media (min-width: $grid-tablet-breakpoint) and (max-width: $grid-desktop-breakpoint - 1) {
+    margin: $grid-tablet-gutter / 2;
+    @include _partial-size($grid-cell-default-columns, $grid-tablet-columns, $grid-tablet-gutter);
+
+    &-hide-tablet {
+      display: none !important;
+    }
+  }
+
+  // Desktop
+  @media (min-width: $grid-desktop-breakpoint) {
+    margin: $grid-desktop-gutter / 2;
+    @include _partial-size($grid-cell-default-columns, $grid-desktop-columns, $grid-desktop-gutter);
+
+    &-hide-desktop {
+      display: none !important;
+    }
+  }
+
+  &-top {
+    align-self: flex-start;
+  }
+
+  &-middle {
+    align-self: center;
+  }
+
+  &-bottom {
+    align-self: flex-end;
+  }
+
+  &-stretch {
+    align-self: stretch;
+  }
+
+  @for $i from 1 through $grid-max-columns {
+    &-order-#{$i} {
+      order: $i;
+    }
+
+    @media (max-width: $grid-tablet-breakpoint - 1) {
+      &-order-#{$i}-phone {
+        order: $i;
+      }
+    }
+
+    @media (min-width: $grid-tablet-breakpoint) and (max-width: $grid-desktop-breakpoint - 1) {
+      &-order-#{$i}-tablet {
+        order: $i;
+      }
+    }
+
+    @media (min-width: $grid-desktop-breakpoint) {
+      &-order-#{$i}-desktop {
+        order: $i;
+      }
+    }
+  }
+
+  // Phone
+  @media (max-width: $grid-tablet-breakpoint - 1) {
+    @for $i from 1 through ($grid-phone-columns - 1) {
+      &-column-#{$i},
+      &-column-#{$i}-phone {
+        @include _partial-size($i, $grid-phone-columns, $grid-phone-gutter);
+      }
+
+      &-offset-#{$i},
+      &-offset-#{$i}-phone {
+        @include _offset-size($i, $grid-phone-columns, $grid-phone-gutter);
+      }
+    }
+
+    @for $i from $grid-phone-columns through $grid-desktop-columns {
+      &-column-#{$i},
+      &-column-#{$i}-phone {
+        @include _full-size($grid-phone-gutter);
+      }
+    }
+  }
+
+  // Tablet
+  @media (min-width: $grid-tablet-breakpoint) and (max-width: $grid-desktop-breakpoint - 1) {
+    // Define partial sizes for columnNumber < totalColumns.
+    @for $i from 1 through ($grid-tablet-columns - 1) {
+      &-column-#{$i},
+      &-column-#{$i}-tablet {
+        @include _partial-size($i, $grid-tablet-columns, $grid-tablet-gutter);
+      }
+    }
+
+    // Define 100% for everything else.
+    @for $i from $grid-tablet-columns through $grid-desktop-columns {
+      &-column-#{$i},
+      &-column-#{$i}-tablet {
+        @include _full-size($grid-tablet-gutter);
+      }
+    }
+
+    // Define valid tablet offsets.
+    @for $i from 1 through ($grid-tablet-columns - 1) {
+      &-offset-#{$i},
+      &-offset-#{$i}-tablet {
+        @include _offset-size($i, $grid-tablet-columns, $grid-tablet-gutter);
+      }
+    }
+  }
+
+  @media (min-width: $grid-desktop-breakpoint) {
+    // Define partial sizes for all numbers of columns.
+    @for $i from 1 through $grid-desktop-columns {
+      &-column-#{$i},
+      &-column-#{$i}-desktop {
+        @include _partial-size($i, $grid-desktop-columns, $grid-desktop-gutter);
+      }
+    }
+
+    // Define valid desktop offsets.
+    @for $i from 1 through ($grid-desktop-columns - 1) {
+      &-offset-#{$i},
+      &-offset-#{$i}-desktop {
+        @include _offset-size($i, $grid-desktop-columns, $grid-desktop-gutter);
+      }
+    }
+  }
+
+  @media (min-width: $grid-desktop-large-breakpoint) {
+    // Define partial sizes for all numbers of columns.
+    @for $i from 1 through $grid-desktop-columns {
+      &-column-#{$i},
+      &-column-#{$i}-desktop-large {
+        @include _partial-size($i, $grid-desktop-columns, $grid-desktop-gutter);
+      }
+    }
+
+    // Define valid desktop offsets.
+    @for $i from 1 through ($grid-desktop-columns - 1) {
+      &-offset-#{$i},
+      &-offset-#{$i}-desktop-large {
+        @include _offset-size($i, $grid-desktop-columns, $grid-desktop-gutter);
+      }
+    }
+  }
+}
