@@ -30,11 +30,13 @@ module.exports = [
     path: '/dashboard',
     handler (request, reply) {
       const user = request.yar.get('user')
+      const message = request.yar.get('message')
 
       if (user) {
         getUser(request, user.token)
           .then(() => {
-            reply.view('dashboard/index')
+            reply.view('dashboard/index', message)
+            request.yar.clear('message')
           }).catch(() => {
             reply.redirect('/')
           })

@@ -3,6 +3,7 @@
  */
 const Boom = require('boom')
 const FirebaseHelpers = require('../helpers/firebase')
+const Calculations = require('../helpers/calculations')
 const getUser = require('../helpers/getUser')
 const helpers = new FirebaseHelpers()
 
@@ -21,12 +22,18 @@ class BloodsController {
       .then(() => {
         helpers.postData('bloods', request.payload)
           .then(() => {
-            console.log('posted')
-            reply({
-              'message': 'Blood Sugar Posted Successfully'
+            request.yar.set('message', {
+              message: 'Blood sugar poosted!',
+              type: 'success'
             })
+            reply.redirect('/dashboard')
           }).catch((error) => {
-            reply(Boom.unauthorized(error))
+            // reply(Boom.unauthorized(error))
+            request.yar.set('message', {
+              message: 'There was an issue posting the Blood!',
+              type: 'error'
+            })
+            reply.redirect('/dashboard')
           })
       })
       .catch(function () {
@@ -71,6 +78,40 @@ class BloodsController {
       })
       .catch(function () {
         reply(Boom.unauthorized('unauthorized user'))
+      })
+  }
+
+  getAverages (request, reply) {
+    helpers.getData('bloods')
+      .then((snapshot) => {
+        const CalculationHelper = new Calculations(snapshot.val())
+
+        reply({
+          data: {
+            metrics: [
+              {
+                figure: CalculationHelper.getAverage(),
+                title: 'Average Reading',
+                type: 'average'
+              },
+              {
+                figure: CalculationHelper.getHighest(),
+                title: 'Highest Reading',
+                type: 'highest'
+              },
+              {
+                figure: CalculationHelper.getLowest(),
+                title: 'Lowest Reading',
+                type: 'lowest'
+              },
+              {
+                figure: CalculationHelper.getTotalResults(),
+                title: 'Total Readings',
+                type: 'total'
+              },
+            ]
+          }
+        })
       })
   }
 }

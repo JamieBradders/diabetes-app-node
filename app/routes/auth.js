@@ -52,6 +52,7 @@ module.exports = [
     method: 'POST',
     path: '/sign-out',
     handler(request, reply) {
+      request.yar.reset()
       controller.signOutUser(request, reply)
     }
   }

@@ -55,5 +55,12 @@ module.exports = [
     handler: (request, reply) => {
       controller.deleteBlood(request, reply)
     }
-  }
+  },
+  {
+    method: 'GET',
+    path: '/averages',
+    handler(request, reply) {
+      controller.getAverages(request, reply)
+    }
+  },
 ]
